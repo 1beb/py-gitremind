@@ -1,6 +1,10 @@
 # py-gitremind
 
-A python script/process that automatically commits your work on a previously determined interval.
+You can trade time in the future for money, but you can't trade money for time that has already past. In the new business reality of speed over everything, losing your work because you forgot to commit is unthinkable. With this in mind, I have created a simply python script that watches a folder (default ~) and does the dirty work of committing, creating a new branch and pushing for you. 
+
+Let's say a commit takes 2.5 seconds. If you commit at least daily, there are 261 days in a year. Setting up this script can save you about 11 minutes. 
+
+The script is extremely simple, intentionally. Fork it!
 
 ## Design
 
@@ -12,6 +16,7 @@ A python script/process that automatically commits your work on a previously det
 4. Set new file action (undecided)
 5. Set push action (undecided)
 6. Set default commit message
+7. Set default branch action (commit to branch, commit to daily branch, commit to current branch non-master)
 
 ### Commit Logic
 
@@ -28,8 +33,9 @@ See: https://tecadmin.net/setup-autorun-python-script-using-systemd/
 
 - Create install script
  -- copy to usr/bin/pygitremind.py
- -- 
+ -- install sysdemd service files
+ -- start system process
 - Create uninstall script
 - Create systemd service files (service + timer)
-- 
+
 
