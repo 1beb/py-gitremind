@@ -1,10 +1,33 @@
 # py-gitremind
 
-You can trade time in the future for money, but you can't trade money for time that has already past. In the new business reality of speed over everything, losing your work because you forgot to commit is unthinkable. With this in mind, I have created a simply python script that watches a folder (default ~) and does the dirty work of committing, creating a new branch and pushing for you. 
+Time is the only resource that you cannot buy back. Oh you can trade money for future time, but wasted time is gone forever. Losing your work, is the same as losing your time. This application watches a folder and commits changes to the repository on configurable schedule and branch. 
 
-Let's say a commit takes 5 seconds. If you commit at least daily, there are 261 work days in a year. Setting up this script can save you about 22 minutes, annually. 
+I built this application because I find myself often forgetting to submit my work at the end of a workday or at an otherwise critical stage of development. I also find it particularly tedious to create a new branch and commit my work to that branch. Supposedly, one could argue that this only takes a few moments, but a few moments summed up over the course of a lifetime could be weeks drained away on something that is otherwise capable of being automated.
 
 The script is extremely simple, intentionally. Fork it!
+
+
+## Requirements
+
+```
+apt-get install python3 libnotify-bin 
+```
+## Usage 
+
+```
+git clone https://github.com/1beb/py-gitremind.git
+# Adjust systemd/gitremind.timer
+# Adjust defaults in gitremind/gitremind.py
+sudo install.sh
+```
+
+## Removal
+
+```
+sudo uninstall.sh
+```
+
+# Appendix
 
 ## Design
 

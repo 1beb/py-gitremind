@@ -1,0 +1,10 @@
+[Unit]
+Description=Py-GitRemind Timer
+
+[Timer]
+OnBootSec=30min
+OnCalendar=*:0/30
+Unit=gitremind.service
+
+[Install]
+WantedBy=timers.target
