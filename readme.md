@@ -2,7 +2,7 @@
 
 You can trade time in the future for money, but you can't trade money for time that has already past. In the new business reality of speed over everything, losing your work because you forgot to commit is unthinkable. With this in mind, I have created a simply python script that watches a folder (default ~) and does the dirty work of committing, creating a new branch and pushing for you. 
 
-Let's say a commit takes 2.5 seconds. If you commit at least daily, there are 261 days in a year. Setting up this script can save you about 11 minutes. 
+Let's say a commit takes 5 seconds. If you commit at least daily, there are 261 work days in a year. Setting up this script can save you about 22 minutes, annually. 
 
 The script is extremely simple, intentionally. Fork it!
 
