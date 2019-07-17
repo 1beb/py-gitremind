@@ -1,4 +1,4 @@
-# py-gitremind
+# py-gitremind UNDER-CONSTRUCTION DO NOT USE
 
 Time is the only resource that you cannot buy back. Oh you can trade money for future time, but wasted time is gone forever. Losing your work, is the same as losing your time. This application watches a folder and commits changes to the repository on configurable schedule and branch. 
 
@@ -54,11 +54,11 @@ sudo uninstall.sh
 
 See: https://tecadmin.net/setup-autorun-python-script-using-systemd/
 
-- Create install script
+- [x] Create install script
  -- copy to usr/bin/pygitremind.py
  -- install sysdemd service files
  -- start system process
-- Create uninstall script
-- Create systemd service files (service + timer)
+- [x] Create uninstall script
+- [x] Create systemd service files (service + timer)
 
 
