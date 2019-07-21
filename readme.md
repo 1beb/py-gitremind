@@ -37,7 +37,7 @@ sudo uninstall.sh
 2. Set interval (default 30 mins)
 3. Set process as systemd (undecided)
 4. Set new file action (undecided)
-5. Set push action (undecided)
+5. Set push action (undecided) 
 6. Set default commit message
 7. Set default branch action (commit to branch, commit to daily branch, commit to current branch non-master)
 
