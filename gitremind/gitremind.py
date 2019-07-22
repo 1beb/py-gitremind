@@ -1,7 +1,6 @@
 import git
 import os
 import re
-import subprocess as s
 import datetime
 
 
@@ -28,20 +27,7 @@ def gitremind(
 
     repo = git.Repo(location)
 
-    if len(repo.index.diff(None)):
-        if repo.active_branch.name == master_branch:
-            branchname = 'pgr_' + re.sub('-','_',str(datetime.date.today()))
-            print('Creating new branch - ' + branchname)
-            repo.git.branch(branchname)
-        else:
-            if branch_action == 'new':
-                # Add warning or notification about creating new branch from branch
-                branchname = 'pgr_' + re.sub('-','_',str(datetime.date.today()))
-                print('Creating new branch - ' + branchname)
-                repo.git.branch(branchname)
-
-
-    if len(repo.untracked_files) > 0:
+    if (len(repo.untracked_files) > 0) & (new_file_action != 'ignore'):
         # if there are untracked files
         untracked = repo.untracked_files
         for f in untracked:
@@ -52,9 +38,30 @@ def gitremind(
             else:
                 print('File too large, skipping: ' + f)
 
+    if (len(repo.index.diff(None)) > 0) | (len(repo.index.entries) > 0):
+        if repo.active_branch.name == master_branch:
+            branchname = 'pgr_' + re.sub('-','_',str(datetime.date.today()))
+            print('Creating new branch - ' + branchname)
+            repo.git.checkout('-b',branchname)
+        else:
+            if branch_action == 'new':
+                # Add warning or notification about creating new branch from branch
+                branchname = 'pgr_' + re.sub('-','_',str(datetime.date.today()))
+                print('Creating new branch - ' + branchname)
+                repo.git.checkout('-b',branchname)
+                
+            if branch_action == 'same-if-not-master':
+                pass # no change required
+
     if len(repo.index.diff(None)):
         repo.index.commit(default_commit_message)
         print('Commiting changes')
+
+    if push_action == "always":
+        try:
+            repo.git.push()
+        except git.exc.GitCommandError:
+            print("No remote setup for - " + location)
 
 
 

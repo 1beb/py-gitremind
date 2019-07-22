@@ -42,33 +42,54 @@ class TestGitRemind(TestCase):
         self.assertTrue(
             os.stat(os.path.join('tmprepo','newfile.txt')).st_size < 1.1*1024*1024
         )
-        self.assertTrue(
-            repo.active_branch.name == 'master'
-        )
+        self.assertTrue(repo.active_branch.name != 'master')
         branchname = 'pgr_' + re.sub('-','_',str(datetime.date.today()))
-        self.assertTrue(
-            repo.active_branch.name == branchname
-        )
-
+        self.assertTrue(repo.active_branch.name == branchname)
         self.delete_repo()
-
-    def test_branch_action_new_if_master(self):
-        pass
     
     def test_branch_action_same_if_not_master(self):
-        pass
+        self.create_repo()
+        self.create_file_of_size()
+        repo = git.Repo('tmprepo')
+        repo.git.checkout('-b','new_branch')
+        self.assertTrue(repo.active_branch.name == 'new_branch')
+        gitremind('tmprepo',branch_action="same-if-not-master")
+        self.assertTrue(repo.active_branch.name == 'new_branch')
+        self.delete_repo()
+
 
     def test_new_file_action_add(self):
-        pass
+        self.create_repo()
+        self.create_file_of_size()
+        gitremind('tmprepo',branch_action="new", new_file_action="add")
+        repo = git.Repo('tmprepo')
+        self.assertTrue(os.stat(os.path.join('tmprepo','newfile.txt')).st_size < 1.1*1024*1024)
+        self.assertTrue(repo.active_branch.name != 'master')
+        branchname = 'pgr_' + re.sub('-','_',str(datetime.date.today()))
+        self.assertTrue(list(repo.index.entries.keys())[0][0] == 'newfile.txt')
+        self.assertTrue(repo.active_branch.name == branchname)
+        self.delete_repo()
 
     def test_new_file_action_limit(self):
-        pass
+        self.create_repo()
+        self.create_file_of_size(2)
+        gitremind('tmprepo',branch_action="new", new_file_action="add", new_file_size_limit=1)
+        repo = git.Repo('tmprepo')
+        self.assertTrue(os.stat(os.path.join('tmprepo','newfile.txt')).st_size > 1.1*1024*1024)
+        self.assertTrue(repo.active_branch.name != 'master')
+        branchname = 'pgr_' + re.sub('-','_',str(datetime.date.today()))
+        self.assertTrue(list(repo.index.entries.keys())[0][0] != 'newfile.txt')
+        self.assertTrue(repo.active_branch.name == branchname)
+        self.delete_repo()
 
     def test_new_file_ignore(self):
-        pass
+        self.create_repo()
+        self.create_file_of_size()
+        gitremind('tmprepo',branch_action="new", new_file_action="ignore")
+        repo = git.Repo('tmprepo')
+        self.assertTrue(os.stat(os.path.join('tmprepo','newfile.txt')).st_size < 1.1*1024*1024)
+        self.assertTrue(repo.active_branch.name == 'master')
+        self.assertTrue(len(repo.untracked_files) == 2)
+        self.assertTrue(repo.untracked_files == ['newfile.txt', 'readme.md'])
+        self.delete_repo()
 
-    def test_new_file_action_warn(self):
-        pass
-
-    def test_new_file_size_limit(self):
-        pass
