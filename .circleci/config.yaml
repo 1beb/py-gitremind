@@ -1,0 +1,16 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/
+    docker:
+      - image: circleci/python:latest
+    steps:
+      - checkout
+      - run:
+          command: |
+            pip3 install -r requirements.txt
+            pip3 install pytest pytest-cov
+      - test:
+          command: | 
+            py.test --cov=gitremind
+
