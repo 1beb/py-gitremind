@@ -39,30 +39,18 @@ def gitremind(
                 print('File too large, skipping: ' + f)
 
     if (len(repo.index.diff(None)) > 0) | (len(repo.index.entries) > 0):
-        if repo.active_branch.name == master_branch:
+        if (repo.active_branch.name == master_branch) | (branch_action =='new'):
             branchname = 'pgr_' + re.sub('-','_',str(datetime.date.today()))
             print('Creating new branch - ' + branchname)
             repo.git.checkout('-b',branchname)
-        else:
-            if branch_action == 'new':
-                # Add warning or notification about creating new branch from branch
-                branchname = 'pgr_' + re.sub('-','_',str(datetime.date.today()))
-                print('Creating new branch - ' + branchname)
-                repo.git.checkout('-b',branchname)
-                
-            if branch_action == 'same-if-not-master':
-                pass # no change required
 
-    if len(repo.index.diff(None)):
-        repo.index.commit(default_commit_message)
         print('Commiting changes')
+        repo.index.commit(default_commit_message)
 
     if push_action == "always":
         try:
             repo.git.push()
         except git.exc.GitCommandError:
             print("No remote setup for - " + location)
-
-
 
 # s.call(['notify-send', 'Hello', 'There!'])
