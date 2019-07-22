@@ -4,15 +4,27 @@ import re
 import datetime
 
 
-def gitremind_wrap(cmd="find ~ -name .git -type d -prune"):
+def gitremind_wrap(
+    new_file_action="add",
+    new_file_size_limit=1, 
+    push_action="always",
+    default_commit_message="Automatic commit by py-gitremind",
+    branch_action="new",
+    master_branch="master",
+    cmd="find ~ -name .git -type d -prune"):
 
     locations = os.popen(cmd).read().split('\n')
     locations = [re.sub('.git','', x) for x in locations]
 
     for location in locations:
-        print(location)
+        gitremind(location,    
+            new_file_action,
+            new_file_size_limit, 
+            push_action,
+            default_commit_message,
+            branch_action,
+            master_branch)
     
-    pass
 
 def gitremind(
     location,
@@ -21,8 +33,7 @@ def gitremind(
     push_action="always",
     default_commit_message="Automatic commit by py-gitremind",
     branch_action="new",
-    master_branch="master",
-    ):
+    master_branch="master"):
 
 
     repo = git.Repo(location)
