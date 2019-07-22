@@ -13,7 +13,7 @@ def gitremind_wrap(
     master_branch="master",
     cmd="find ~ -name .git -type d -prune"):
 
-    locations = os.popen(cmd).read().split('\n')
+    locations = os.popen(cmd).read().split('\n')[:-1]
     locations = [re.sub('.git','', x) for x in locations]
 
     for location in locations:

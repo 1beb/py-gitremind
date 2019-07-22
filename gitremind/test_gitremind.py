@@ -126,13 +126,15 @@ class TestGitRemindWrap(TestCase):
         self.create_repo(folder='tmprepo2')
         self.create_file_of_size(folder='tmprepo1')
         self.create_file_of_size(folder='tmprepo2')
+
         gitremind_wrap(cmd='find . -name .git -type d -prune | grep tmp')
 
         repo = git.Repo('tmprepo1')
+
         self.assertTrue(os.stat(os.path.join('tmprepo1','newfile.txt')).st_size > 0)
         self.assertTrue(repo.active_branch.name != 'master')
         branchname = 'pgr_' + re.sub('-','_',str(datetime.date.today()))
-        self.assertTrue(list(repo.index.entries.keys())[0][0] != 'newfile.txt')
+        self.assertTrue(list(repo.index.entries.keys())[0][0] == 'newfile.txt')
         self.assertTrue(repo.active_branch.name == branchname)
         self.delete_repo(folder='tmprepo1')
 
@@ -140,7 +142,7 @@ class TestGitRemindWrap(TestCase):
         self.assertTrue(os.stat(os.path.join('tmprepo2','newfile.txt')).st_size > 0)
         self.assertTrue(repo.active_branch.name != 'master')
         branchname = 'pgr_' + re.sub('-','_',str(datetime.date.today()))
-        self.assertTrue(list(repo.index.entries.keys())[0][0] != 'newfile.txt')
+        self.assertTrue(list(repo.index.entries.keys())[0][0] == 'newfile.txt')
         self.assertTrue(repo.active_branch.name == branchname)
         self.delete_repo(folder='tmprepo2')
 
