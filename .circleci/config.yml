@@ -10,7 +10,7 @@ jobs:
           command: |
             pip3 install -r requirements.txt
             pip3 install pytest pytest-cov
-      - test:
+      - run:
           command: | 
             py.test --cov=gitremind
 
