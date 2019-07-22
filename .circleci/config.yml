@@ -8,8 +8,8 @@ jobs:
       - checkout
       - run:
           command: |
-            pip3 install -r requirements.txt
-            pip3 install pytest pytest-cov
+            sudo pip3 install -r requirements.txt
+            sudo pip3 install pytest pytest-cov
       - run:
           command: | 
             py.test --cov=gitremind
